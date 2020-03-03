@@ -59,7 +59,7 @@ class JsonController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $input = file_get_contents("php://input");
-        $this->retranslatePackage($input);
+        //$this->retranslatePackage($input);
 
         $items = json_decode($input);
 
