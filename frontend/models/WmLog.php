@@ -52,18 +52,21 @@ class WmLog extends ActiveRecord
         '-3' => 'zero_work',
         '-2' => 'freeze_with_water',
         '-1' => 'no_connect_mcd',
-        'no_power',
-        'power_on_washer',
-        'refill_washer',
-        'washing_dress',
-        'rising_dress',
-        'extraction_dress',
-        'washing_end',
-        'washer_free',
-        'nulling_washer',
-        'connect_mcd',
-        'sub_by_work',
-        'max_washer_event'
+         '0' => 'no_power',
+         '1' => 'power_on_washer',
+         '2' => 'refill_washer',
+         '3' => 'washing_dress',
+         '4' => 'rising_dress',
+         '5' => 'extraction_dress',
+         '6' => 'washing_end',
+         '7' => 'washer_free',
+         '8' => 'nulling_washer',
+         '9' => 'connect_mcd',
+         '10' => 'sub_by_work',
+         '11' => 'refill_washer_cashless',
+         '12' => 'mkd_reboot',
+         '13' => 'washing_start',
+         '14' =>'max_washer_event'
     ];
 
     /** @var $model */
