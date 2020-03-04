@@ -167,7 +167,7 @@ class CbLogSearchFilter extends JlogSearch
                                                   ->andWhere(['company_id' => $entity->getCompanyId()]);
 
         if ($columnName == 'static_address' && !empty($floor = $this->getLastPiece(',', $value))) {
-                $unitsQuery = $unitsQuery->andFilterWhere(['like', 'floor', $floor]);
+                $unitsQuery = $unitsQuery->andFilterWhere(['like', 'static_floor', $floor]);
         }
 
         $units = $unitsQuery->all();

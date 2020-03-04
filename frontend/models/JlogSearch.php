@@ -833,8 +833,13 @@ class JlogSearch extends Jlog
      * @param array $params
      * @return array
      */
-    public function setMashineNumber(JlogSearch $searchModel, array $params): array
+    public function setMashineNumber(JlogSearch $searchModel, array $params, bool $isMashine = false): array
     {
+        if (!$isMashine) {
+
+            return $params;
+        }
+
         $mashineId = Yii::$app->request->get()['id'] ?? self::ZERO;
 
         if (!empty($mashineId) && !empty($mashine = WmMashine::findOne($mashineId))) {

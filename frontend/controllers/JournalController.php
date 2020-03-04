@@ -112,9 +112,7 @@ class JournalController extends \frontend\controllers\Controller
         $searchModel = new JlogSearch();
         $entityHelper = new EntityHelper();
         $params = $this->makeParams(Yii::$app->request->queryParams);
-
         $params = $searchModel->setParams($searchModel, $params, $params);
-        $params = $searchModel->setMashineNumber($searchModel, $params);
 
         $searchModel->inputValue['date'] = $params['inputValue']['date'];
         $searchModel->val2['date'] = $params['val2']['date'];
@@ -227,14 +225,16 @@ class JournalController extends \frontend\controllers\Controller
      *
      * @param array $prms
      * @param yii\data\ActiveDataProvider $dataProvider
+     * @param bool $isMashine
      * @return string
      */
-    public function actionData($prms, $dataProvider)
+    public function actionData($prms, $dataProvider, $isMashine = false)
     {
         $searchModel = new JLogDataSearch();
         $searchFilter = new CbLogSearchFilter();
         $dataProvider->query->andWhere(['type_packet' => Jlog::TYPE_PACKET_DATA]);
-        $searchModel->setMashineNumber($searchModel, $prms);
+
+        $searchModel->setMashineNumber($searchModel, $prms, $isMashine);
         $arrayProvider = $searchModel->searchData($prms, $dataProvider->query);
 
         $searchModel->inputValue['date'] = $prms['inputValue']['date'];
@@ -320,9 +320,10 @@ class JournalController extends \frontend\controllers\Controller
      * 
      * @param array $params
      * @param yii\data\ActiveDataProvider $dataProvider
+     * @param bool $isMashine
      * @return string
      */
-    public function renderAppropriatePacket($params, $dataProvider)
+    public function renderAppropriatePacket($params, $dataProvider, $isMashine = false)
     {
         switch ($params['type_packet']) {
             case Jlog::TYPE_PACKET_LOG:
@@ -333,7 +334,7 @@ class JournalController extends \frontend\controllers\Controller
                 return $this->actionInit($params, $dataProvider);
             case Jlog::TYPE_PACKET_DATA:
 
-                return $this->actionData($params, $dataProvider);
+                return $this->actionData($params, $dataProvider, $isMashine);
             case Jlog::TYPE_PACKET_DATA_CP:
 
                 return $this->actionDataCp($params, $dataProvider);

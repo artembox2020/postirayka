@@ -109,7 +109,7 @@ use yii\jui\DatePicker;
     <?php
         // renders appropriate view by data packet
 
-        echo $journalController->renderAppropriatePacket($params, $dataProvider);
+        echo $journalController->renderAppropriatePacket($params, $dataProvider, true);
     ?>
 
     <?php
