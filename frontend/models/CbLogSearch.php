@@ -565,9 +565,9 @@ class CbLogSearch extends CbLog
      */
     public function getWmStatus($model)
     {
-        $machine = new \frontend\models\WmMashine();
-        if (array_key_exists($model['status'], $machine->log_state)) {
-            $logState = $machine->log_state[$model['status']];
+        $machine = new \frontend\models\WmLog();
+        if (array_key_exists($model['status'], $machine->current_state)) {
+            $logState = strtoupper($machine->current_state[$model['status']]);
 
             return "<span class='$logState'>".Yii::t('logs', $logState)."</span>";
         }
@@ -1267,6 +1267,6 @@ class CbLogSearch extends CbLog
     public function getTimestampCorrection(int $timestamp): int
     {
 
-        return $timestamp - self::TWO_HOURS_CORRECTION;
+        return $timestamp;
     }
 }
