@@ -68,4 +68,23 @@ class AddressesController extends ActiveController
 
         return $this->asJson($result);
     }
+
+    /**
+     * @return \yii\web\Response
+     */
+    public function actionList()
+    {
+        $result = array();
+        $output = AddressBalanceHolder::find()->all();
+
+        foreach ($output as $object) {
+            foreach ($object as $key => $value) {
+                if ($key == 'name' && $value != null) {
+                    $result[] = $object->name. ':' . $object->address;
+                }
+            }
+        }
+
+        return $this->asJson($result);
+    }
 }
