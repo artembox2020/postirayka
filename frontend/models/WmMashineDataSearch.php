@@ -439,7 +439,7 @@ class WmMashineDataSearch extends WmMashineData
         $query->andWhere(['mashine_id' => $mashine->id, 'current_status' => $allowedStatuses, 'status' => $statuses]);
         $query->orderBy(['created_at' => SORT_ASC]);
         $workSecs = $this->getWorkSecsByPacketTimestamps(
-            $start, $end, ArrayHelper::getColumn(QueryOptimizer::getItemsByQuery($query), 'created_at')
+            $start, $end, ArrayHelper::getColumn($query->all(), 'created_at')
         );
 
         $bhSummarySearch = new BalanceHolderSummarySearch();
