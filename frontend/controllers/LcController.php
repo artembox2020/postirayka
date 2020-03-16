@@ -58,12 +58,15 @@ class LcController extends Controller
                 $cbl->save();
                 $imei->ping = time();
                 $imei->save();
-                echo 'cbl data save!';exit;
+                // echo 'cbl data save!';
+                exit;
             } else {
-                echo 'Imei not Active';exit;
+                // echo 'Imei not Active';
+                exit;
             }
         } else {
-            echo 'Imei not exists';exit;
+            // echo 'Imei not exists';
+            exit;
         }
     }
 

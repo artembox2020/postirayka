@@ -61,12 +61,14 @@ class LwController extends Controller
 
                 $imei->ping = time();
                 $imei->save();
-                echo 'wml data save!';
+                // echo 'wml data save!';
             } else {
-                echo 'Imei not Active';exit;
+                // echo 'Imei not Active';
+                exit;
             }
         } else {
-            echo 'Imei not exists';exit;
+            // echo 'Imei not exists';
+            exit;
         }
     }
 

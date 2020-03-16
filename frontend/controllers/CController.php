@@ -84,12 +84,14 @@ class CController extends Controller
 
                 $jlog = new Jlog();
                 $jlog->createLogFromImei($imei, $p, Jlog::TYPE_PACKET_INITIALIZATION);
-                echo 'Success!';
+                //echo 'Success!';
             } else {
-                echo 'Imei not Active';exit;
+                //echo 'Imei not Active';
+                exit;
             }
         } else {
-            echo 'Imei not exists';exit;
+            //echo 'Imei not exists';
+            exit;
         }
     }
 
@@ -191,7 +193,8 @@ class CController extends Controller
             // telegram bot end
 
         } else {
-            echo 'Imei not init or not exists'; exit;
+            //echo 'Imei not init or not exists';
+            exit;
         }
     }
 
@@ -435,7 +438,7 @@ class CController extends Controller
             ->where(['number_device' => $wm_mashine_dto->number_device])
             ->andWhere(['imei_id' => $imei->id])->one()) {
                 $new_wash_mashine = $this->autoCreateWashMachine($wm_mashine_dto, $imei->id);
-                     echo $wm_mashine_dto->number_device . ' WM created!' . '<br>';
+                // echo $wm_mashine_dto->number_device . ' WM created!' . '<br>';
                 $wm_mashine_ids[] = $new_wash_mashine->id;
             }
 
@@ -462,9 +465,9 @@ class CController extends Controller
 //                Debugger::dd($wm_mashine_data->display);
                 $this->updateWmMashine($wm_mashine, $wm_mashine_data);
                 if ($wm_mashine_data->save(false)) {
-                    echo $wm_mashine_data->number_device . ' WM data save!' . '<br>';
+                    //echo $wm_mashine_data->number_device . ' WM data save!' . '<br>';
                 } else {
-                    echo 'WM data Don\'t save' . '<br>';
+                    //echo 'WM data Don\'t save' . '<br>';
                 }
             }
 
@@ -495,7 +498,7 @@ class CController extends Controller
         $wm_mashine->is_deleted = false;
         $wm_mashine->status = WmMashine::STATUS_ACTIVE;
         $wm_mashine->update(false);
-        echo $wm_mashine->number_device . ' WM updated!' . '<br>';
+        //echo $wm_mashine->number_device . ' WM updated!' . '<br>';
     }
 
     /**
@@ -513,7 +516,7 @@ class CController extends Controller
         $gd_mashine->is_deleted = false;
         $gd_mashine->status = WmMashine::STATUS_ACTIVE;
         $gd_mashine->update(false);
-        echo 'GD updated!' . '<br>';
+        //echo 'GD updated!' . '<br>';
     }
 
     /**
@@ -533,7 +536,7 @@ class CController extends Controller
                 ->where(['imei_id' => $imei_id])->one()) {
                 $new_gd_mashine = $this->autoCreateGelDispenser($gd_mashine_dto, $imei_id);
                 $gd_mashine_ids[] = $new_gd_mashine->id;
-                echo 'Gel Dispenser created!' . '<br>';
+                //echo 'Gel Dispenser created!' . '<br>';
             }
 
             if (GdMashine::find()
@@ -553,9 +556,9 @@ class CController extends Controller
                 $this->updateGdMashine($gd_mashine, $gd_mashine_data);
 
                 if ($gd_mashine_data->save(false)) {
-                    echo 'Gel Dispenser data save!' . '<br>';
+                    //echo 'Gel Dispenser data save!' . '<br>';
                 } else {
-                    echo 'Gel Dispenser data Don\'t save' . '<br>';
+                    //echo 'Gel Dispenser data Don\'t save' . '<br>';
                 }
             }
         }
@@ -646,17 +649,18 @@ class CController extends Controller
 
                     $imei->ping = time();
                     $imei->save();
-                    echo 'cbl encashment data save!';
+                    //echo 'cbl encashment data save!';
                     exit;
                 } else {
-                    echo 'Unique key {imei_id, unix_time_offset} constraint violation';
+                    //echo 'Unique key {imei_id, unix_time_offset} constraint violation';
                 }
             } else {
-                echo 'Imei not Active';
+                //echo 'Imei not Active';
                 exit;
             }
         } else {
-            echo 'Imei not exists';exit;
+            //echo 'Imei not exists';
+            exit;
         }
     }
 
