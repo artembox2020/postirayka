@@ -70,12 +70,19 @@ class AddressesController extends ActiveController
     }
 
     /**
+     * @param string $company_ids
      * @return \yii\web\Response
      */
-    public function actionList()
+    public function actionList($company_ids = null)
     {
         $result = array();
-        $output = AddressBalanceHolder::find()->all();
+        $query = AddressBalanceHolder::find();
+
+        if (!empty($company_ids) && is_array($companyIds = explode(",", $company_ids))) {
+            $query = $query->andWhere(['company_id' => $companyIds]);
+        }
+
+        $output = $query->all();
 
         foreach ($output as $object) {
             foreach ($object as $key => $value) {
