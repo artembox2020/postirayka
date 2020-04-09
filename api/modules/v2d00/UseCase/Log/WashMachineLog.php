@@ -37,6 +37,7 @@ class WashMachineLog
                 $wml->number = $items->pac->numberDev;
                 $wml->status = $items->pac->event->washer;
                 $wml->price = $items->pac->priceMode;
+                $wml->rate = $items->pac->tariff;
                 $wml->account_money = $items->pac->devCash;
                 $wml->washing_mode = $items->pac->washMode;
                 $wml->wash_temperature = $items->pac->washTemp;

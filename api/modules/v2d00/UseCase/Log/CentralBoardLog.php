@@ -41,7 +41,7 @@ class CentralBoardLog
                 $cbl->fireproof_counter_card = $items->pac->money->totalCards;
                 $cbl->collection_counter = $items->pac->money->collection;
                 $cbl->notes_billiards_pcs = $items->pac->money->numberNotes;
-                $cbl->rate = $items->pac->tariff;
+                //$cbl->rate = $items->pac->tariff;
                 $cbl->refill_amount = $items->pac->devCash;
 //                $cbl->banknote_face_values = $cbLogSearch->normalizeBanknoteFaceValuesString($items->numberNotes);
                 $cbl->is_deleted = false;

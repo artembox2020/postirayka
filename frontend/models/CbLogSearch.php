@@ -69,6 +69,7 @@ class CbLogSearch extends CbLog
                 'imei', 
                 'device',
                 'number',
+                'rate',
                 'signal',
                 'status',
                 'price',
@@ -111,6 +112,7 @@ class CbLogSearch extends CbLog
                 'imei',
                 'device',
                 'number',
+                'rate',
                 'signal',
                 'status',
                 'rate AS price',
@@ -406,7 +408,7 @@ class CbLogSearch extends CbLog
 
         return Yii::t('logs', strtoupper($model['device']));
     }
-    
+
     /**
      * Gets 'signal' or 'price' basing on model data 
      * 
@@ -417,10 +419,10 @@ class CbLogSearch extends CbLog
     {
         if (strtoupper($model['device']) == 'WM') {
 
-            return $model['signal'];
+            return $model['rate'];
         }
 
-        return $model['price'];
+        return $model['signal'];
     }
 
     /**

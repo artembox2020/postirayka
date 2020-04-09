@@ -129,7 +129,7 @@ class StatePackage
         $wm_mashine_data->number_device = $washMachine->number;
         $wm_mashine_data->level_signal = $washMachine->rssi;
         $wm_mashine_data->bill_cash = $washMachine->money;
-        $wm_mashine_data->total_cash = $washMachine->total_cash;
+        $wm_mashine_data->total_cash = $washMachine->total_cash_dev;
         $wm_mashine_data->door_position = $washMachine->door;
         $wm_mashine_data->current_status = $washMachine->state;
         $wm_mashine_data->display = $washMachine->display;
@@ -163,7 +163,7 @@ class StatePackage
         $wash_machine->current_status = $washMachine->state;
         $wash_machine->display = $washMachine->display;
         $wash_machine->status = WmMashine::STATUS_ACTIVE;
-        $wash_machine->total_cash = $washMachine->total_cash;
+        $wash_machine->total_cash = $washMachine->total_cash_dev;
         $wash_machine->update(false);
     }
 
