@@ -100,7 +100,7 @@ class Terminal
         ];
 
         foreach ($wm_machine as $key => $value) {
-            $d = new DateTime(date(self::DATE_FORMAT, $value->ping + 60*60)); // добавили один час(зимее время)
+            $d = new DateTime(date(self::DATE_FORMAT, $value->ping)); // добавили один час(зимее время)
             $this->array[$value->number_device] = [
                 'device_number' => $value->number_device,
                 'display' => $value->display,
