@@ -19,7 +19,7 @@ class CbLogSearch extends CbLog
     const PAGE_SIZE = 10;
     const TYPE_ENCASHMENT_STATUS = 8;
     const TYPE_LAST_ENCASHMENT_DATE = '01.01.2019';
-    const TYPE_ITEMS_LIMIT = 500;
+    const TYPE_ITEMS_LIMIT = 100;
 
     public $address;
 
