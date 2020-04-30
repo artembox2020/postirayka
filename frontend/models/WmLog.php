@@ -33,6 +33,9 @@ class WmLog extends ActiveRecord
 {
     /** @var array $current_state */
     public $current_state = [
+        '-22' => 'bill_reject',
+        '-21' => 'cashless_vend_denied',
+        '-20' => 'error_b2',
         '-19' => 'error_ue',
         '-18' => 'error_te',
         '-17' => 'error_oe_of',
