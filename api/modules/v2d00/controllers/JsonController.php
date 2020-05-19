@@ -59,7 +59,7 @@ class JsonController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $input = file_get_contents("php://input");
-        //$this->retranslatePackage($input);
+        $this->retranslatePackage($input);
 
         $items = json_decode($input);
 
@@ -99,23 +99,41 @@ class JsonController extends Controller
     public function putLog(string $packet): void
     {
         $fp = fopen($_SERVER['DOCUMENT_ROOT'].'/log/packets.dump', 'a+');
-        fwrite($fp, time().":".$packet."\n");
+        fwrite($fp, $packet."\n");
         fclose($fp);
     }
 
     /** retranslates packets to another server **/
     public function retranslatePackage($input): void
     {
-        $url = 'http://mypostirayka.pp.ua'.\yii\helpers\Url::to(['/v2d00/json/index']);
+        ob_start();
 
+        $url = 'http://167.86.98.115:6080'.\yii\helpers\Url::to(['/v2d00/json/index']);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $input);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json'
-        ));
-        curl_exec($ch);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, getallheaders());
 
+        $mh = curl_multi_init();
+        curl_multi_add_handle($mh, $ch);
+        curl_multi_exec($mh, $active);
+
+        //execute the multi handle
+        do {
+            $status = curl_multi_exec($mh, $active);
+
+            if ($active) {
+                // Wait a short time for more activity
+                curl_multi_select($mh);
+            }
+        } while ($active && $status == CURLM_OK);
+
+        curl_multi_remove_handle($mh, $ch);
+        curl_multi_close($mh);
         curl_close($ch);
+
+        ob_get_clean();
     }
 }

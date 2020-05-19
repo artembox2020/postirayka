@@ -32,7 +32,7 @@ use frontend\services\globals\DateTimeHelper;
  * Class CController
  * @package frontend\controllers
  */
-class CController extends Controller
+class CController extends \frontend\controllers\Controller
 {
     const TYPE_PACKET = 'p';
     const TYPE_WM = 'WM';
@@ -53,7 +53,7 @@ class CController extends Controller
      */
     public function actionI($p)
     {
-        //$this->retranslatePackage('/c/i', $p);
+        $this->retranslatePackage('/c/i', $p);
         $cParser = new CParser();
         $result = $cParser->iParse($p);
         $initDto = new ImeiInitDto($result);
@@ -106,7 +106,7 @@ class CController extends Controller
      */
     public function actionD($p)
     {
-        //$this->retranslatePackage('/c/d', $p);
+        $this->retranslatePackage('/c/d', $p);
         $array = array();
         $mashineData = array();
         $packetParser = new CParser();
@@ -614,7 +614,7 @@ class CController extends Controller
      */
     public function actionF($p)
     {
-        //$this->retranslatePackage('/c/f', $p);
+        $this->retranslatePackage('/c/f', $p);
         $result = $this->fParse($p);
         $centralBoardDto = new CentralBoardEncashmentDto($result);
         $cbLogSearch = new CbLogSearch();
@@ -733,7 +733,7 @@ class CController extends Controller
      */
     public function actionQ($p)
     {
-        //$this->retranslatePackage('/c/q', $p);
+        $this->retranslatePackage('/c/q', $p);
         $arrOut = [];
 
         $column = [
@@ -776,20 +776,5 @@ class CController extends Controller
 
             return 'com=0_error='.$status;
         }
-    }
-
-    /** retranslates packets to another server **/
-    public function retranslatePackage(string $url, string $p): void
-    {
-        $url = 'http://mypostirayka.pp.ua'.$url.'?p='.$p;
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-        curl_exec($ch);
-
-        curl_close($ch);
     }
 }

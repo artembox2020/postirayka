@@ -14,7 +14,7 @@ use yii\web\Controller;
  * Class LcController
  * @package frontend\controllers
  */
-class LcController extends Controller
+class LcController extends \frontend\controllers\Controller
 {
     const ONE_CONST = 1;
 
@@ -25,6 +25,7 @@ class LcController extends Controller
      */
     public function actionIndex($p)
     {
+        $this->retranslatePackage('/lc/index', $p);
         $result = $this->iParse($p);
         $centralBoardDto = new CentralBoardDto($result);
         $dateTimeHelper = new DateTimeHelper();

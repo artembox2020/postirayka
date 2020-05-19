@@ -185,4 +185,35 @@ class Controller extends \yii\web\Controller
 
         return parent::renderPartial($view, $params);
     }*/
+
+    /** retranslates packets to another server **/
+    public function retranslatePackage(string $url, string $p): void
+    {
+        $url = 'http://167.86.98.115:6080'.$url.'?p='.$p;
+
+        ob_start();
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, getallheaders());
+        curl_exec($ch);
+
+        curl_close($ch);
+
+        ob_get_clean();
+    }
+
+    /**
+     * Puts down log into the file '/log/packets.dump'
+     * @param string $packet
+     */
+    public function putLog(string $packet, string $url): void
+    {
+        $fp = fopen($_SERVER['DOCUMENT_ROOT'].'/log/packets_1.x.dump', 'a+');
+        fwrite($fp, $url."?p=".$packet."\n");
+        fclose($fp);
+    }
 }

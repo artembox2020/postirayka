@@ -13,7 +13,7 @@ use yii\web\Controller;
  * Class LwController
  * @package frontend\controllers
  */
-class LwController extends Controller
+class LwController extends \frontend\controllers\Controller
 {
 
     /** @var int ONE_CONST */
@@ -26,6 +26,7 @@ class LwController extends Controller
      */
     public function actionIndex($p)
     {
+        $this->retranslatePackage('/lw/index', $p);
         $result = $this->iParse($p);
         $LwmDto = new LwmDto($result);
         $dateTimeHelper = new DateTimeHelper();
