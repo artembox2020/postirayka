@@ -15,7 +15,7 @@ use yii\web\Response;
  * Class JsonController
  * @package api\modules\v2d00\controllers
  */
-class JsonController extends Controller
+class JsonController extends \yii\web\Controller
 {
     const LOG = 'L';
     const INI = 'I';
