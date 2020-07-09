@@ -113,7 +113,9 @@ class CbLog extends \yii\db\ActiveRecord
         '63' => 'err_fram_machines',
         '64' => 'err_fram_statinfo',
         '65' => 'err_fram_logimage',
-        '66' => 'err_machines_table_corrupted'
+        '66' => 'err_machines_table_corrupted',
+	'67' => 'accu_start_of_charging',
+	'68' => 'accu_finish_of_charging'
         ];
 
     /** @var $model */

@@ -80,6 +80,8 @@ return [
     'motor_failure' => 'Помилка двигуна КП',
     'Collection Counter'  => 'Лічильник інкасації',
     'Collection Counter/Spin Type'  => 'Лічильник інкасації/Тип віджиму',
+    'accu_start_of_charging' => 'Увімкнення заряджання акумулятора',
+    'accu_finish_of_charging' => 'Вимкнення заряджання акумулятора',
     'com_error' => 'Запис лога',
     'cpu_problem' => 'Помилка CPU',
     'err_machines_table_corrupted' => 'Error mach table',
