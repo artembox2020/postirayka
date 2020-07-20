@@ -23,6 +23,7 @@ return [
     'Imei not active' => 'Імей не активний',
     'Imei not exists' => 'Імей не існує',
     'OK' => 'OK',
+    'SUPPLY_OFF' => 'Вимкнено живлення',
     'This terminal is not online' => 'Такого терміналу немає в мережі',
     'Terminal works' => 'Термінал працює'
 ];

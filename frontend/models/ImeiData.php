@@ -76,7 +76,8 @@ class ImeiData extends \yii\db\ActiveRecord
         '5' => 'ErrSettings',
         '6' => 'Err6LowPan',
         '7' => 'OK',
-        self::CP_STATUS_TERMINAL_NOT_IN_TOUCH => 'ErrTerminalNotInTouch'
+        self::CP_STATUS_TERMINAL_NOT_IN_TOUCH => 'ErrTerminalNotInTouch',
+        '9' => 'SUPPLY_OFF'
     ];
 
     public $status_bill_acceptor = [
