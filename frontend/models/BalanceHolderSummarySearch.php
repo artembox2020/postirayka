@@ -542,7 +542,7 @@ class BalanceHolderSummarySearch extends BalanceHolder
             }
 
             // makes none-zero time intervals
-            $nonZeroIntervals = $entityHelper->makeNonZeroIntervalsByTimestamps(
+            /*$nonZeroIntervals = $entityHelper->makeNonZeroIntervalsByTimestamps(
                 $start,
                 $endTimestamp,
                 new ImeiData(),
@@ -552,10 +552,10 @@ class BalanceHolderSummarySearch extends BalanceHolder
                 'fireproof_residue'
             );
             $income = 0;
-            $isFirst = true;
+            $isFirst = true;*/
 
             //calculation by each non-zero time interval and summing
-            foreach ($nonZeroIntervals as $interval) {
+            /*foreach ($nonZeroIntervals as $interval) {
                 $income += $entityHelper->getUnitIncomeByNonZeroTimestamps(
                     $interval['start'],
                     $interval['end'],
@@ -567,7 +567,18 @@ class BalanceHolderSummarySearch extends BalanceHolder
                     $isFirst
                 );
                 $isFirst = false;
-            }
+            }*/
+            
+            $income = 0 +  $entityHelper->getUnitIncomeByNonZeroTimestamps(
+                    $start,
+                    $endTimestamp,
+                    new ImeiData(),
+                    $imei,
+                    'imei_id',
+                    $selectString,
+                    'fireproof_residue',
+                    true
+                );
             $income = $this->parseFloat($income, 2);
         } else {
             $income = null;
@@ -781,8 +792,13 @@ class BalanceHolderSummarySearch extends BalanceHolder
 
         $emptyDays = array_diff($daysArray, array_keys($incomesFromHistory));
 
-        foreach ($emptyDays as $day)
+        foreach ($daysArray as $day)
         {
+            if (isset($incomesFromHistory[$day]['income'])) {
+                $incomes[$day] = $incomesFromHistory[$day];
+                continue;
+            }
+
             $timestamp = $timestamps['start'] + ($day - 1) *$intervalStep;
 
             if ($todayTimestamp < $timestamp) {
@@ -808,8 +824,15 @@ class BalanceHolderSummarySearch extends BalanceHolder
                 if (is_null($income)) {
                     $income = $this->getAverageIncomeByLastMonth($year, $month, $timestamp, $todayTimestamp, $day, $address);
                 }
-                $mashineStatistics = $this->getMashineStatisticsByImeiAndTimestamps($timestamp, $timestampEnd, $imei, $address);
-                $incomes[$day] = array_merge(['income' => $income], $mashineStatistics);
+
+                if (isset($incomesFromHistory[$day]['created'])) {
+                    $incomes[$day] = $incomesFromHistory[$day];
+                    $incomes[$day]['income'] = $income;
+                } else {
+                    $mashineStatistics = $this->getMashineStatisticsByImeiAndTimestamps($timestamp, $timestampEnd, $imei, $address);
+                    $incomes[$day] = array_merge(['income' => $income], $mashineStatistics);
+                }
+
                 break;
             }
 
@@ -825,12 +848,17 @@ class BalanceHolderSummarySearch extends BalanceHolder
 
             $income = $this->getIncomeByImeiAndTimestamps($timestamp, $timestamp + $intervalStep, $imei, $address);
 
-            $timestampEnd = $timestamp + $intervalStep;
-            $mashineStatistics = $this->getMashineStatisticsByImeiAndTimestamps($timestamp, $timestampEnd, $imei, $address);
-            $incomes[$day] = array_merge(['income' => $income], $mashineStatistics);
+            if (isset($incomesFromHistory[$day]['created'])) {
+                $incomes[$day] = $incomesFromHistory[$day];
+                $incomes[$day]['income'] = $income;
+            } else {
+                $timestampEnd = $timestamp + $intervalStep;
+                $mashineStatistics = $this->getMashineStatisticsByImeiAndTimestamps($timestamp, $timestampEnd, $imei, $address);
+                $incomes[$day] = array_merge(['income' => $income], $mashineStatistics);
+            }
         }
 
-        $incomes = $incomes + $incomesFromHistory;
+        //$incomes = $incomes + $incomesFromHistory;
 
         return $incomes;
     }
