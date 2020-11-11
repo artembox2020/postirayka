@@ -108,6 +108,34 @@ class JsonController extends \yii\web\Controller
     {
         ob_start();
 
+
+        $url = 'http://167.86.119.116:6080'.\yii\helpers\Url::to(['/v2d00/json/index']);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $input);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, getallheaders());
+
+        $mh = curl_multi_init();
+        curl_multi_add_handle($mh, $ch);
+        curl_multi_exec($mh, $active);
+
+        //execute the multi handle
+        do {
+            $status = curl_multi_exec($mh, $active);
+
+            if ($active) {
+                // Wait a short time for more activity
+                curl_multi_select($mh);
+            }
+        } while ($active && $status == CURLM_OK);
+
+        curl_multi_remove_handle($mh, $ch);
+        curl_multi_close($mh);
+        curl_close($ch);
+
+
         $url = 'http://167.86.98.115:6080'.\yii\helpers\Url::to(['/v2d00/json/index']);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $input);
@@ -133,6 +161,7 @@ class JsonController extends \yii\web\Controller
         curl_multi_remove_handle($mh, $ch);
         curl_multi_close($mh);
         curl_close($ch);
+
 
         ob_get_clean();
     }
