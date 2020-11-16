@@ -38,7 +38,7 @@ use frontend\services\globals\EntityHelper;
                 >
                 <?php
                     echo (
-                        isset($data[$j]['incomes'][$i]['income']) ? 
+                        (isset($data[$j]['incomes'][$i]['income']) && empty($data[$j]['incomes'][$i]['is_cancelled'])) ? 
                         '<span class="td-cell">'.$data[$j]['incomes'][$i]['income'].'</span>' : '<span class="td-cell"> &nbsp;</span>'
                     ).
                     EntityHelper::makePopupWindow(
