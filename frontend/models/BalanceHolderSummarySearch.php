@@ -997,7 +997,9 @@ class BalanceHolderSummarySearch extends BalanceHolder
                 $incomes = $this->getIncomesByYearMonth($year, $month, $address);
                 $countTotal += QueryOptimizer::getItemsCountByQuery($this->getAllMashinesQueryByYearMonth($year, $month, $address));
                 for ($i = 1, $j = 0; $i <= $days; ++$i) {
-                    $summaryTotal[$i] += $this->parseFloat($incomes[$i]['income'], 2);
+                    if (empty($incomes[$i]['is_cancelled'])) {
+                        $summaryTotal[$i] += $this->parseFloat($incomes[$i]['income'], 2);
+                    }
                     $idlesTotal[$i] += $this->parseFloat($incomes[$i]['idleHours'], 2);
                     $start = $this->getTimestampByYearMonthDay($year, $month, $i, true);
                     $end = $this->getTimestampByYearMonthDay($year, $month, $i, false);
