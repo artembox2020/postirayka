@@ -58,11 +58,11 @@ $dateFormat = "d.m.Y";
             ],
             [    
                 'label' => Yii::t('frontend','Date Inserted'),
-                'value' => date($dateFormat, $model->date_inserted)
+                'value' =>  !empty($model->date_inserted) ?  date($dateFormat, $model->date_inserted) : ''
             ],
             [
                 'label' => Yii::t('frontend','Date Monitoring'),
-                'value' => date($dateFormat, $model->date_connection_monitoring)
+                'value' => !empty($model->date_connection_monitoring) ? date($dateFormat, $model->date_connection_monitoring): ''
             ],
             'number_of_floors',
             'countWashMachine',

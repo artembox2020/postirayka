@@ -33,6 +33,7 @@ use bs\Flatpickr\FlatpickrWidget;
     <?= $form->field($model, 'floor')->textInput() ?>
 
     <?= $form->field($model, 'number_of_floors')->textInput(['maxlength' => true]) ?>
+<?php if (!$model->isNewRecord): ?>
 
     <?= $form->field($model, 'date_inserted')->widget(FlatpickrWidget::className(), [
         'locale' => strtolower(substr(Yii::$app->language, 0, 2)),
@@ -57,6 +58,7 @@ use bs\Flatpickr\FlatpickrWidget;
             'defaultDate' => $model->date_connection_monitoring ? date(DATE_ATOM, $model->date_connection_monitoring) : null,
         ],
     ]) ?>
+<?php endif ?>
 
     <?= $form->field($model, 'company_id')->hiddenInput(['value'=> $company->id])->label(false); ?>
 
