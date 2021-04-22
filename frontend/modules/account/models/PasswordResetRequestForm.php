@@ -68,6 +68,8 @@ class PasswordResetRequestForm extends Model
         $link = \yii\helpers\Url::to('/account/sign-in/reset-password', true);
         $link .= "?token=".$user->access_token;
         $link = Yii::t('frontend', 'Password reset link').': '.Html::a($link, $link, ['target' => '_blank']);
+        
+        return mail($this->email, Yii::t('frontend', 'Password reset for {name}', ['name' => Yii::$app->name]), $link, ["Content-Type" => "text/html"]);
 
         return Yii::$app->mailer->compose('passwordReset', ['user' => $user])
             ->setFrom([Yii::$app->params['robotEmail'] => Yii::$app->name . ' robot'])

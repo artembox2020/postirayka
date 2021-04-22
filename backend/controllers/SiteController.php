@@ -7,6 +7,7 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use common\components\keyStorage\FormModel;
 use common\models\LoginForm;
+use common\models\User;
 use vova07\fileapi\actions\UploadAction as FileAPIUpload;
 
 /**

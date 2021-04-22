@@ -88,7 +88,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $user = User::findOne(Yii::$app->user->id);
+        if (empty(Yii::$app->user) || empty( $user = User::findOne(Yii::$app->user->id))) {
+             return $this->redirect('account/sign-in/login');
+        }
+
         $searchModel = new UserSearch();
 
         if (!empty($user->company)) {
@@ -101,13 +104,12 @@ class SiteController extends Controller
                 $balanceHoldersData[$balanceHolder->id] = $balanceHolder->getBalanceHolderData(self::CELL_HEIGHT);
             }
         } else {
+            if (Yii::$app->user->can('customer')) {
 
-            return $this->redirect('account/sign-in/login');
-        }
-        
-        if (Yii::$app->user->can('customer')) {
+                return $this->redirect(['account/customer/index', 'id' => Yii::$app->user->id]);
+            }
 
-            return $this->redirect(['account/customer/index', 'id' => Yii::$app->user->id]);
+            return $this->render('welcome', ['user' => $user]);
         }
 
         return $this->render('index', [

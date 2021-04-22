@@ -176,15 +176,15 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        'allowedIPs' => ['127.0.0.1', '::1', '95.47.114.243'],
-        'as access' => [
+        'allowedIPs' => ['127.0.0.1', '::1', '95.47.114.243', '134.249.146.11'],
+        /*'as access' => [
             'class' => 'common\behaviors\GlobalAccessBehavior',
             'rules' => [
                 [
                     'allow' => true,
                 ],
             ],
-        ],
+        ],*/
     ];
 }
 

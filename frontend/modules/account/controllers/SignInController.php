@@ -187,6 +187,7 @@ class SignInController extends Controller
      */
     public function actionResetPassword($token)
     {
+         //$model = new ResetPasswordForm($token);
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {

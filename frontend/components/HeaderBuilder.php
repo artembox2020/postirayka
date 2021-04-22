@@ -25,28 +25,30 @@ class HeaderBuilder extends Component {
     {
         $brand = Yii::$app->name;
         $brand_url = '/';
+        $company = null;
         $entity = new Entity();
         $userMenuItems = [];
-
-        if (!empty($user = $entity->getUser())) {
-            if (!empty($user->company)) {
-                $company = $user->company;
-                $brand = $company->name;
-            }
-        }
 
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => Yii::t('frontend', 'Login'), 'url' => ['/account/sign-in/login']];
         } else {
+            $user = Yii::$app->user;
+
+            if (!empty($user->company)) {
+                $company = $user->company;
+                $brand = $company->name;
+            }
+
             $role = ArrayHelper::map(
-                Yii::$app->authManager->getRolesByUser(Yii::$app->user->id), 
+                Yii::$app->authManager->getRolesByUser($user->id), 
                 'description', 'description'
             );
             foreach ($role as $key => $val) {
                 $role_description = $key;
             }
-            $role_name = Yii::$app->user->identity->username;
-            $userRole = \Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+
+            $role_name = $user->identity->username;
+            $userRole = \Yii::$app->authManager->getRolesByUser($user->id);
 
             if (empty($role_description)) {
                 $userRole = '';
@@ -54,15 +56,17 @@ class HeaderBuilder extends Component {
                 $userRole = $role_description;
             }
 
-            if ( yii::$app->user->can('viewTechData') ) {
+            $monitoring_url = null;
+
+            if ($user->can('viewTechData') ) {
                 $monitoring_url = '/monitoring/technical';
             }
 
-            if ( yii::$app->user->can('viewFinData') ) {
+            if ($user->can('viewFinData') ) {
                 $monitoring_url = '/monitoring/financial';
             }
 
-            if ( yii::$app->user->can('viewTechData') && yii::$app->user->can('viewFinData') ) {
+            if ($user->can('viewTechData') && $user->can('viewFinData') ) {
                 $monitoring_url = '/monitoring';
             }
 
@@ -72,30 +76,24 @@ class HeaderBuilder extends Component {
 
             $menuItems = [
                 [
-                    'label' => Yii::t('frontend', 'Monitoring'),
-                    'url' => [$monitoring_url],
-                ],
-                [
-                    'label' => Yii::t('map', 'CARDS'),
-                    'url' => ['/map'],
-                ],
-                [
                     'label' => Yii::t('nav-items', 'Net'),
                     'url' => ['/net-manager'],
+                    'visible' => $company && $user->can('viewCompanyData'),
                 ],
                 [
-                    'label' => Yii::t('frontend', 'Zurnal'),
-                    'url' => ['/summary-journal'],
+                    'label' => Yii::t('frontend', 'Monitoring'),
+                    'url' => [$monitoring_url],
+                    'visible' => $company && $monitoring_url,
                 ],
                 [
                     'label' => Yii::t('nav-items', 'Encashment'),
                     'url' => ['/encashment-journal/index'],
-                    'visible' => Yii::$app->user->can('viewFinData'),
+                    'visible' => $company && $user->can('viewFinData'),
                 ],
                 [
                     'label' => Yii::t('frontend', 'Dlogs'),
                     'url' => ['/journal/index?sort=-date'],
-                    'visible' => Yii::$app->user->can('viewTechData'),
+                    'visible' => $company && $user->can('viewTechData'),
                 ],
             ];
 
@@ -103,17 +101,17 @@ class HeaderBuilder extends Component {
                 [
                     'label' => Yii::t('frontend', 'Users'),
                     'url' => ['/net-manager/employees'],
-                    'visible' => Yii::$app->user->can('manager'),
+                    'visible' => $user->can('manager'),
                 ],
                 [
                     'label' => Yii::t('frontend', 'Settings'),
                     'url' => ['/account/default/settings'],
-                    'visible' => Yii::$app->user->can('manager'),
+                    'visible' => $user->can('manager'),
                 ],
                 [
                     'label' => Yii::t('frontend', 'Company'),
                     'url' => ['/account/default/tt'],
-                    'visible' => Yii::$app->user->can('administrator'),
+                    'visible' => $company && $user->can('administrator'),
                 ],
                 [
                     'label' => Yii::t('frontend', 'Logout'),

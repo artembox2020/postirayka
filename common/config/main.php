@@ -104,17 +104,18 @@ $config = [
             ),
         ],
         'mailer' => [
+            
             'class' => 'yii\swiftmailer\Mailer',
 //            One more suggestion is to use port "465" and encryption as "ssl" instead of port "587", encryption "tls".
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'robots.1gb.ua',
-//                'username' => 'server@postirayka.com',
-//                'password' => '',
-                'port' => '25',
-//                'encryption' => 'tls',
+                'host' => 'smtp.yandex.ru',
+                'username' => 'artem-voloshyn21@yandex.ru',
+                'password' => 'Zend12__',
+                'port' => 587,
+                'encryption' => 'tls',
             ],
-            'useFileTransport' => true,
+            'useFileTransport' => false,
         ],
         'cache' => [
             'class' => YII_ENV_DEV ? 'yii\caching\DummyCache' : 'yii\caching\FileCache',

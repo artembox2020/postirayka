@@ -14,6 +14,9 @@
     </div>
     <div class="menu-items mr-5 nav">
         <?php foreach ($menuItems as $item): ?>
+            <?php if (isset($item['visible']) && !$item['visible']): ?>
+                <?php continue; ?>
+            <?php endif; ?>
             <?php if ($item['label'] == 'add-card'): ?>
                 <?= Yii::$app->view->render('@frontend/views/layouts/main-new/add-card') ?>
             <?php else: ?>
@@ -26,6 +29,9 @@
     <?php if (!empty($userMenuItems)): ?>
         <div class="user-actions">
             <?php foreach ($userMenuItems as $item): ?>
+                <?php if (isset($item['visible']) && !$item['visible']): ?>
+                    <?php continue; ?>
+                <?php endif; ?>
                 <a href = "<?= $item['url'][0] ?>" data-method = "post"><?= $item['label'] ?></a>
             <?php endforeach; ?>
         </div>
